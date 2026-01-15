@@ -3,3 +3,8 @@ venv/
 venv
 
 .DS_Store
+
+# Data & generated outputs
+data/
+*.pdf
+*.tei.xml
