@@ -1,0 +1,43 @@
+Phase 1 implementation plan
+
+Step A: Build the datset
+- Upload paper -> extract references -> resolve to canonical papers
+- Store:
+    - paper_id, title, abstract, year, citationCount
+    - edges (seed -> ref)
+    - raw reference string
+
+ Step B:  Build embeddings + FAISS
+ - For each node: embed title + abstract
+ - Add to FAISS index
+ - Save embeddings to DB so no recomputing
+
+ Step C: Clustering
+ - Run k-means (k=5) or HDBSCAN
+ - Assign cluster_id per node -> send to frontend
+
+ Step D: Ranking
+ - pagerank on graph
+ - compute score
+
+ Step E: UI
+ - Graph view + legend for clusters
+ - Search bar
+ - Sidebar cards: "Top Prior Words", "Clusters", "Search Results"
+
+Tech Stack
+
+Backend:
+- Python + FastAPI
+- PyMuPDF (PDF to text) or GROBID to find all citations in the paper/bibliography
+- Semantic Scholar API (metadata)
+- sentence transformers (embeddings)
+    - Start with: `all-MiniLM-l6-v2` (fast)
+    - If "scientific": SPECTER2 or SciBERT-based sentence transformer
+- FAISS(vector index, local)
+- networkx (pagerank/centrality)
+- SQLite + SQLModel (store papers/edges + cached embeddings)
+
+FrontEnd:
+- React + Vite
+- Cytoscape.js for graph (fast to build & interactive)
