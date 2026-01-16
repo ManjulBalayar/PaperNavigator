@@ -41,3 +41,7 @@ Backend:
 FrontEnd:
 - React + Vite
 - Cytoscape.js for graph (fast to build & interactive)
+
+Docker run:
+docker pull lfoppiano/grobid:0.8.0
+docker run -t --rm -p 8070:8070 lfoppiano/grobid:0.8.0
